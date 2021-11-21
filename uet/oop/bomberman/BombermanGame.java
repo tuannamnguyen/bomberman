@@ -21,6 +21,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -68,15 +69,16 @@ public class BombermanGame extends Application {
 
         // Them scene vao stage
         stage.setScene(scene);
+        stage.setTitle("Bomberman Game");
         stage.show();
     }
 
     public void createMap() {
         try {
-            File map = new File("src\\resources\\levels\\lvl1.txt");
+            FileReader map = new FileReader("res\\levels\\lvl1.txt");
             Scanner fileReader = new Scanner(map);
             
-            for (int i = 1; fileReader.hasNextLine(); i++) {
+            for (int i = 0; fileReader.hasNextLine(); i++) {
                 String content = fileReader.nextLine();
                 for (int j = 0; j < content.length(); j++) {
                     if (content.charAt(i) == '#') {
@@ -119,6 +121,7 @@ public class BombermanGame extends Application {
             }
         } catch (FileNotFoundException e) {
             System.out.println("Error FileNotFound");
+            e.printStackTrace();
         }
         
         
