@@ -65,7 +65,7 @@ public class BombermanGame extends Application {
 
         
         // Tao scene
-        Scene scene = new Scene(root, 1280, 720);
+        Scene scene = new Scene(root);
 
         // Them scene vao stage
         stage.setScene(scene);
@@ -81,35 +81,37 @@ public class BombermanGame extends Application {
             for (int i = 0; fileReader.hasNextLine(); i++) {
                 String content = fileReader.nextLine();
                 for (int j = 0; j < content.length(); j++) {
-                    if (content.charAt(i) == '#') {
+                    System.out.println(content.charAt(j));
+
+                    if (content.charAt(j) == '#') {
                         Entity wall = new Wall(j, i, Sprite.wall.getFxImage());
                         stillObjects.add(wall);
                     } else {
                         Entity grass = new Grass(j, i, Sprite.grass.getFxImage());
                         stillObjects.add(grass);
                         
-                        if (content.charAt(i) == 'p') {
-                            Entity bomber = new Bomber(j, i, Sprite.player_right_1.getFxImage());
+                        if (content.charAt(j) == 'p') {
+                            Entity bomber = new Bomber(j, i, Sprite.player_right.getFxImage());
                             entities.add(bomber);
-                        } else if (content.charAt(i) == '1') {
-                            Entity balloon = new Balloon(j, i, Sprite.balloom_right1.getFxImage());
+                        } else if (content.charAt(j) == '1') {
+                            Entity balloon = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
                             entities.add(balloon);
-                        } else if (content.charAt(i) == '2') {
-                            Entity oneal = new Oneal(j, i, Sprite.oneal_right1.getFxImage());
+                        } else if (content.charAt(j) == '2') {
+                            Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage());
                             entities.add(oneal);
-                        } else if (content.charAt(i) == 'b') {
+                        } else if (content.charAt(j) == 'b') {
                             Entity bombItem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
                             stillObjects.add(bombItem);
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
-                        } else if (content.charAt(i) == 'f') {
+                        } else if (content.charAt(j) == 'f') {
                             Entity flameItem = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
                             stillObjects.add(flameItem);
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
-                        } else if (content.charAt(i) == 's') {
+                        } else if (content.charAt(j) == 's') {
                             Entity speedItem = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
                             stillObjects.add(speedItem);
 
