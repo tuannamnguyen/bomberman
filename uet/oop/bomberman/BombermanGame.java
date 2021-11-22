@@ -20,7 +20,6 @@ import uet.oop.bomberman.entities.SpeedItem;
 import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
