@@ -11,7 +11,11 @@ import uet.oop.bomberman.graphics.AnimatedImage;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends Entity {
-    
+    enum facingDirection {
+        UP, DOWN, LEFT, RIGHT
+    }
+
+    private facingDirection direction;
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -31,6 +35,7 @@ public class Bomber extends Entity {
 
             double t = (System.nanoTime() - BombermanGame.startNanoTime) / 1000000000.0;
             this.img = player.getFrame(t);
+            direction = facingDirection.RIGHT;
         } else if (BombermanGame.currentlyPressedKey.contains(KeyCode.A)) {
             x -= speed;
 
@@ -43,6 +48,7 @@ public class Bomber extends Entity {
 
             double t = (System.nanoTime() - BombermanGame.startNanoTime) / 1000000000.0;
             this.img = player.getFrame(t);
+            direction = facingDirection.LEFT;
         } else if (BombermanGame.currentlyPressedKey.contains(KeyCode.W)) {
             y -= speed;
 
@@ -55,7 +61,7 @@ public class Bomber extends Entity {
 
             double t = (System.nanoTime() - BombermanGame.startNanoTime) / 1000000000.0;
             this.img = player.getFrame(t);
-
+            direction = facingDirection.UP;
         } else if (BombermanGame.currentlyPressedKey.contains(KeyCode.S)) {
             y += speed;
 
@@ -68,8 +74,18 @@ public class Bomber extends Entity {
 
             double t = (System.nanoTime() - BombermanGame.startNanoTime) / 1000000000.0;
             this.img = player.getFrame(t);
+            direction = facingDirection.DOWN;
+        } else {
+            if (direction == facingDirection.UP) {
+                this.img = Sprite.player_up.getFxImage();
+            } else if (direction == facingDirection.DOWN) {
+                this.img = Sprite.player_down.getFxImage();
+            } else if (direction == facingDirection.LEFT) {
+                this.img = Sprite.player_left.getFxImage();
+            } else if (direction == facingDirection.RIGHT) {
+                this.img = Sprite.player_right.getFxImage();
+            } 
         }
 
-         
     }
 }
