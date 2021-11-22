@@ -6,6 +6,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Balloon;
 import uet.oop.bomberman.entities.BombItem;
@@ -23,6 +24,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -31,9 +33,11 @@ public class BombermanGame extends Application {
 
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
+    public static HashSet<KeyCode> currentlyPressedKey = new HashSet<>();
 
     private GraphicsContext gc;
     private Canvas canvas;
+    public static final long startNanoTime = System.nanoTime();
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
 
@@ -46,6 +50,16 @@ public class BombermanGame extends Application {
         // Tao Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
+
+        //Handle key events
+        canvas.setFocusTraversable(true);
+        canvas.requestFocus();
+        canvas.setOnKeyPressed(e -> {
+            currentlyPressedKey.add(e.getCode());
+        });
+        canvas.setOnKeyReleased(e -> {
+            currentlyPressedKey.remove(e.getCode());
+        });
 
         // Tao root container
         Group root = new Group();
@@ -81,7 +95,6 @@ public class BombermanGame extends Application {
             for (int i = 0; fileReader.hasNextLine(); i++) {
                 String content = fileReader.nextLine();
                 for (int j = 0; j < content.length(); j++) {
-                    System.out.println(content.charAt(j));
 
                     if (content.charAt(j) == '#') {
                         Entity wall = new Wall(j, i, Sprite.wall.getFxImage());

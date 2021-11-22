@@ -11,6 +11,8 @@ public abstract class Entity {
     //Tọa độ Y tính từ góc trái trên trong Canvas
     protected int y;
 
+    protected int speed = 1;
+
     protected Image img;
 
     //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
