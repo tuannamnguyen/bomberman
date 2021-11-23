@@ -16,6 +16,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.FlameItem;
 import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Oneal;
+import uet.oop.bomberman.entities.Portal;
 import uet.oop.bomberman.entities.SpeedItem;
 import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Sprite;
@@ -129,6 +130,12 @@ public class BombermanGame extends Application {
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
+                        } else if (content.charAt(j) == 'x') {
+                            Entity portal = new Portal(j, i, Sprite.portal.getFxImage());
+                            stillObjects.add(portal);
+
+                            Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
+                            stillObjects.add(brick);
                         }
                     }
                 }
@@ -150,4 +157,6 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
     }
+
+    
 }

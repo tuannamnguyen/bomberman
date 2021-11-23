@@ -5,7 +5,6 @@ import java.util.List;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.shape.Box;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.AnimatedImage;
 import uet.oop.bomberman.graphics.Sprite;
@@ -21,10 +20,12 @@ public class Bomber extends Entity {
         super(x, y, img);
     }
 
+    //TODO: Check collision
+
     @Override
     public void update() {
         if (BombermanGame.currentlyPressedKey.contains(KeyCode.D)) {
-            x += speed;
+            this.setX(this.getX() + speed);
 
             List<Image> imgList = new ArrayList<>();
             imgList.add(Sprite.player_right.getFxImage());
@@ -37,7 +38,7 @@ public class Bomber extends Entity {
             this.img = player.getFrame(t);
             direction = facingDirection.RIGHT;
         } else if (BombermanGame.currentlyPressedKey.contains(KeyCode.A)) {
-            x -= speed;
+            this.setX(this.getX() - speed);
 
             List<Image> imgList = new ArrayList<>();
             imgList.add(Sprite.player_left.getFxImage());
@@ -50,7 +51,7 @@ public class Bomber extends Entity {
             this.img = player.getFrame(t);
             direction = facingDirection.LEFT;
         } else if (BombermanGame.currentlyPressedKey.contains(KeyCode.W)) {
-            y -= speed;
+            this.setY(this.getY() - speed);
 
             List<Image> imgList = new ArrayList<>();
             imgList.add(Sprite.player_up.getFxImage());
@@ -63,7 +64,7 @@ public class Bomber extends Entity {
             this.img = player.getFrame(t);
             direction = facingDirection.UP;
         } else if (BombermanGame.currentlyPressedKey.contains(KeyCode.S)) {
-            y += speed;
+            this.setY(this.getY() + speed);
 
             List<Image> imgList = new ArrayList<>();
             imgList.add(Sprite.player_down.getFxImage());
@@ -86,6 +87,5 @@ public class Bomber extends Entity {
                 this.img = Sprite.player_right.getFxImage();
             } 
         }
-
     }
 }
