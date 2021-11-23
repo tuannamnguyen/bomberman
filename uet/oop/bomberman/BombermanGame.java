@@ -1,5 +1,12 @@
 package uet.oop.bomberman;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Scanner;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -8,25 +15,18 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
-import uet.oop.bomberman.entities.Balloon;
-import uet.oop.bomberman.entities.BombItem;
-import uet.oop.bomberman.entities.Bomber;
-import uet.oop.bomberman.entities.Brick;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.FlameItem;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Oneal;
-import uet.oop.bomberman.entities.Portal;
-import uet.oop.bomberman.entities.SpeedItem;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.movingObj.Balloon;
+import uet.oop.bomberman.entities.movingObj.Bomber;
+import uet.oop.bomberman.entities.movingObj.Oneal;
+import uet.oop.bomberman.entities.staticObj.BombItem;
+import uet.oop.bomberman.entities.staticObj.Brick;
+import uet.oop.bomberman.entities.staticObj.FlameItem;
+import uet.oop.bomberman.entities.staticObj.Grass;
+import uet.oop.bomberman.entities.staticObj.Portal;
+import uet.oop.bomberman.entities.staticObj.SpeedItem;
+import uet.oop.bomberman.entities.staticObj.Wall;
 import uet.oop.bomberman.graphics.Sprite;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
 
 
 public class BombermanGame extends Application {
@@ -158,5 +158,15 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
     }
 
+    public List<Entity> getEntities() {
+        return entities;
+    }
+
+    public List<Entity> getStillObjects() {
+        return stillObjects;
+    }
     
+    public BombermanGame currentGame() {
+        return this;
+    }
 }

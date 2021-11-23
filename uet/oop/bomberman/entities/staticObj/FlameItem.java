@@ -1,5 +1,6 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.staticObj;
 
+import uet.oop.bomberman.entities.Entity;
 import javafx.scene.image.Image;
 
 public class FlameItem extends Entity {

@@ -1,4 +1,4 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.movingObj;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,9 @@ import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.staticObj.Brick;
+import uet.oop.bomberman.entities.staticObj.Wall;
 import uet.oop.bomberman.graphics.AnimatedImage;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -19,8 +22,6 @@ public class Bomber extends Entity {
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
     }
-
-    //TODO: Check collision
 
     @Override
     public void update() {
@@ -37,6 +38,7 @@ public class Bomber extends Entity {
             double t = (System.nanoTime() - BombermanGame.startNanoTime) / 1000000000.0;
             this.img = player.getFrame(t);
             direction = facingDirection.RIGHT;
+
         } else if (BombermanGame.currentlyPressedKey.contains(KeyCode.A)) {
             this.setX(this.getX() - speed);
 
@@ -50,6 +52,7 @@ public class Bomber extends Entity {
             double t = (System.nanoTime() - BombermanGame.startNanoTime) / 1000000000.0;
             this.img = player.getFrame(t);
             direction = facingDirection.LEFT;
+
         } else if (BombermanGame.currentlyPressedKey.contains(KeyCode.W)) {
             this.setY(this.getY() - speed);
 
@@ -63,7 +66,9 @@ public class Bomber extends Entity {
             double t = (System.nanoTime() - BombermanGame.startNanoTime) / 1000000000.0;
             this.img = player.getFrame(t);
             direction = facingDirection.UP;
+
         } else if (BombermanGame.currentlyPressedKey.contains(KeyCode.S)) {
+
             this.setY(this.getY() + speed);
 
             List<Image> imgList = new ArrayList<>();
@@ -76,6 +81,7 @@ public class Bomber extends Entity {
             double t = (System.nanoTime() - BombermanGame.startNanoTime) / 1000000000.0;
             this.img = player.getFrame(t);
             direction = facingDirection.DOWN;
+
         } else {
             if (direction == facingDirection.UP) {
                 this.img = Sprite.player_up.getFxImage();
@@ -85,7 +91,19 @@ public class Bomber extends Entity {
                 this.img = Sprite.player_left.getFxImage();
             } else if (direction == facingDirection.RIGHT) {
                 this.img = Sprite.player_right.getFxImage();
-            } 
+            }
         }
     }
+
+    /*
+     * public boolean canMove() {
+     * 
+     * for (Entity e : BombermanGame.getEntities()) { if ((e instanceof Balloon || e
+     * instanceof Oneal) && (this.collide(e))) { return true; } }
+     * 
+     * for (Entity e : BombermanGame.getStillObjects()) { if ((e instanceof Wall ||
+     * e instanceof Brick) && (this.collide(e))) { return true; } }
+     * 
+     * return false; }
+     */
 }
