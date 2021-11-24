@@ -16,9 +16,9 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.movingObj.Balloon;
 import uet.oop.bomberman.entities.movingObj.Bomber;
-import uet.oop.bomberman.entities.movingObj.Oneal;
+import uet.oop.bomberman.entities.movingObj.enemy.Balloon;
+import uet.oop.bomberman.entities.movingObj.enemy.Oneal;
 import uet.oop.bomberman.entities.staticObj.BombItem;
 import uet.oop.bomberman.entities.staticObj.Brick;
 import uet.oop.bomberman.entities.staticObj.FlameItem;
@@ -164,9 +164,5 @@ public class BombermanGame extends Application {
 
     public static List<Entity> getStillObjects() {
         return stillObjects;
-    }
-    
-    public BombermanGame currentGame() {
-        return this;
     }
 }

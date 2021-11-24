@@ -6,18 +6,17 @@ import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.staticObj.Brick;
-import uet.oop.bomberman.entities.staticObj.Wall;
 import uet.oop.bomberman.graphics.AnimatedImage;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class Bomber extends Entity {
+public class Bomber extends movingObjects {
     enum facingDirection {
         UP, DOWN, LEFT, RIGHT
     }
 
     private facingDirection direction;
+
+    private boolean isAlive = true;
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -95,4 +94,17 @@ public class Bomber extends Entity {
         }
     }
 
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean isAlive) {
+        this.isAlive = isAlive;
+    }
+
+    @Override
+    public boolean canMove() {
+        
+    }
+    
 }

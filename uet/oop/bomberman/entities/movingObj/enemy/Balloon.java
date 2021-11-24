@@ -1,11 +1,10 @@
-package uet.oop.bomberman.entities.movingObj;
+package uet.oop.bomberman.entities.movingObj.enemy;
 
 import java.util.Random;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Entity;
 
-public class Balloon extends Entity {
+public class Balloon extends Enemy {
     public Balloon(int x, int y, Image img) {
         super(x, y, img);
     }

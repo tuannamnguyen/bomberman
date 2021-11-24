@@ -1,9 +1,9 @@
-package uet.oop.bomberman.entities.movingObj;
+package uet.oop.bomberman.entities.movingObj.enemy;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Entity;
 
-public class Oneal extends Entity {
+
+public class Oneal extends Enemy {
     public Oneal(int x, int y, Image img) {
         super(x, y, img);
     }

@@ -3,7 +3,6 @@ package uet.oop.bomberman.entities;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Entity extends Rectangle {
@@ -15,8 +14,6 @@ public abstract class Entity extends Rectangle {
      * 
      * truy cập các thuộc tính trên bằng setter và getter của lớp rectangle.
      */
-
-    protected int speed = 1;
 
     protected Image img;
 
@@ -38,23 +35,4 @@ public abstract class Entity extends Rectangle {
                 this.getY() < other.getY() + other.getHeight() &&
                 this.getHeight() + this.getY() > other.getY());
     }
-
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    public Image getImg() {
-        return img;
-    }
-
-    public void setImg(Image img) {
-        this.img = img;
-    }
-    
-
-    
 }
