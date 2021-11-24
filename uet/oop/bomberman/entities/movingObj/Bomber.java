@@ -95,15 +95,4 @@ public class Bomber extends Entity {
         }
     }
 
-    /*
-     * public boolean canMove() {
-     * 
-     * for (Entity e : BombermanGame.getEntities()) { if ((e instanceof Balloon || e
-     * instanceof Oneal) && (this.collide(e))) { return true; } }
-     * 
-     * for (Entity e : BombermanGame.getStillObjects()) { if ((e instanceof Wall ||
-     * e instanceof Brick) && (this.collide(e))) { return true; } }
-     * 
-     * return false; }
-     */
 }

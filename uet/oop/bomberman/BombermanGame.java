@@ -38,8 +38,8 @@ public class BombermanGame extends Application {
     private GraphicsContext gc;
     private Canvas canvas;
     public static final long startNanoTime = System.nanoTime();
-    private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+    private static List<Entity> entities = new ArrayList<>();
+    private static List<Entity> stillObjects = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -158,11 +158,11 @@ public class BombermanGame extends Application {
         entities.forEach(g -> g.render(gc));
     }
 
-    public List<Entity> getEntities() {
+    public static List<Entity> getEntities() {
         return entities;
     }
 
-    public List<Entity> getStillObjects() {
+    public static List<Entity> getStillObjects() {
         return stillObjects;
     }
     

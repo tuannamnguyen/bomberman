@@ -22,7 +22,7 @@ public abstract class Entity extends Rectangle {
 
     // Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity(int xUnit, int yUnit, Image img) {  
-        super(xUnit * Sprite.SCALED_SIZE, yUnit * Sprite.SCALED_SIZE, 16, 16);
+        super(xUnit * Sprite.SCALED_SIZE, yUnit * Sprite.SCALED_SIZE, img.getWidth(), img.getHeight());
         this.img = img;
     }
 
@@ -38,5 +38,23 @@ public abstract class Entity extends Rectangle {
                 this.getY() < other.getY() + other.getHeight() &&
                 this.getHeight() + this.getY() > other.getY());
     }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public Image getImg() {
+        return img;
+    }
+
+    public void setImg(Image img) {
+        this.img = img;
+    }
+    
+
     
 }
