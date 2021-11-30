@@ -19,13 +19,13 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.movingObj.Bomber;
 import uet.oop.bomberman.entities.movingObj.enemy.Balloon;
 import uet.oop.bomberman.entities.movingObj.enemy.Oneal;
-import uet.oop.bomberman.entities.staticObj.BombItem;
-import uet.oop.bomberman.entities.staticObj.Brick;
-import uet.oop.bomberman.entities.staticObj.FlameItem;
-import uet.oop.bomberman.entities.staticObj.Grass;
-import uet.oop.bomberman.entities.staticObj.Portal;
-import uet.oop.bomberman.entities.staticObj.SpeedItem;
-import uet.oop.bomberman.entities.staticObj.Wall;
+import uet.oop.bomberman.entities.stillObj.BombItem;
+import uet.oop.bomberman.entities.stillObj.Brick;
+import uet.oop.bomberman.entities.stillObj.FlameItem;
+import uet.oop.bomberman.entities.stillObj.Grass;
+import uet.oop.bomberman.entities.stillObj.Portal;
+import uet.oop.bomberman.entities.stillObj.SpeedItem;
+import uet.oop.bomberman.entities.stillObj.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 
@@ -140,6 +140,8 @@ public class BombermanGame extends Application {
                     }
                 }
             }
+
+            fileReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("Error FileNotFound");
             e.printStackTrace();

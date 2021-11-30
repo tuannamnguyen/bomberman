@@ -1,7 +1,5 @@
 package uet.oop.bomberman.entities.movingObj.enemy;
 
-import java.util.Random;
-
 import javafx.scene.image.Image;
 
 public class Balloon extends Enemy {
@@ -9,28 +7,8 @@ public class Balloon extends Enemy {
         super(x, y, img);
     }
 
-    enum Direction {
-        UP, DOWN, LEFT, RIGHT
-    }
-
-    private Direction direction;
-
     @Override
     public void update() {
-        Random random = new Random();
-        int ranNum = random.nextInt(4);
-
-        if (ranNum == 0) {
-            // go up
-
-            
-
-        } else if (ranNum == 1) {
-            
-        } else if (ranNum == 2) {
-           
-        } else if (ranNum == 3) {
-            
-        }
+       
     }
 }
