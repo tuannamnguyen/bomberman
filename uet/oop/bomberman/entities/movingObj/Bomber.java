@@ -47,7 +47,7 @@ public class Bomber extends movingObjects {
 
     @Override
     public boolean canMove() {
-
+        return false;
     }
 
     private void moveUp() {

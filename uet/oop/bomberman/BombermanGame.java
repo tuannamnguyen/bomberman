@@ -89,7 +89,7 @@ public class BombermanGame extends Application {
 
     public void createMap() {
         try {
-            FileReader map = new FileReader("res\\levels\\lvl1.txt");
+            FileReader map = new FileReader("src/uet/oop/bomberman/res/levels/lvl1.txt");
             Scanner fileReader = new Scanner(map);
             
             for (int i = 0; fileReader.hasNextLine(); i++) {
