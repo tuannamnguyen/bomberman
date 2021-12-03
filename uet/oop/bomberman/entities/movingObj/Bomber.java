@@ -51,7 +51,7 @@ public class Bomber extends movingObjects {
     }
 
     private void moveUp() {
-        this.setY(this.getY() - speed);
+        y -= speed;
 
         List<Image> imgList = new ArrayList<>();
         imgList.add(Sprite.player_up.getFxImage());
@@ -66,7 +66,7 @@ public class Bomber extends movingObjects {
     }
 
     private void moveDown() {
-        this.setY(this.getY() + speed);
+        y += speed;
 
         List<Image> imgList = new ArrayList<>();
         imgList.add(Sprite.player_down.getFxImage());
@@ -82,7 +82,7 @@ public class Bomber extends movingObjects {
     }
 
     private void moveLeft() {
-        this.setX(this.getX() - speed);
+        x -= speed;
 
         List<Image> imgList = new ArrayList<>();
         imgList.add(Sprite.player_left.getFxImage());
@@ -97,7 +97,7 @@ public class Bomber extends movingObjects {
     }
 
     private void moveRight() {
-        this.setX(this.getX() + speed);
+        x += speed;
 
         List<Image> imgList = new ArrayList<>();
         imgList.add(Sprite.player_right.getFxImage());
