@@ -1,16 +1,9 @@
 package uet.oop.bomberman.entities.movingObj;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.graphics.AnimatedImage;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends movingObjects {
-
 
     public static boolean isAlive = true;
 
@@ -20,6 +13,28 @@ public class Bomber extends movingObjects {
 
     @Override
     public void update() {
+        if (this.direction.equalsIgnoreCase("RIGHT")) {
+            this.x += speed;
+            this.img = Sprite.player_right.getFxImage();
+        } else if (this.direction.equalsIgnoreCase("LEFT")) {
+            this.x -= speed;
+            this.img = Sprite.player_left.getFxImage();
+        } else if (this.direction.equalsIgnoreCase("UP")) {
+            this.y -= speed;
+            this.img = Sprite.player_up.getFxImage();
+        } else if (this.direction.equalsIgnoreCase("DOWN")) {
+            this.y += speed;
+            this.img = Sprite.player_down.getFxImage();
+        } else if (this.direction.equalsIgnoreCase("NONE")) {
+            this.x += 0;
+            this.y += 0;
+        }
 
+        this.direction = "none";
+    }
+
+    @Override
+    public boolean canMove() {
+        return true;
     }
 }

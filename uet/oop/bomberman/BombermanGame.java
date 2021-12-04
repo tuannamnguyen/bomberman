@@ -3,7 +3,6 @@ package uet.oop.bomberman;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,6 +32,7 @@ public class BombermanGame extends Application {
 
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
+    public static Bomber bomber;
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -53,10 +53,36 @@ public class BombermanGame extends Application {
         canvas.setFocusTraversable(true);
         canvas.requestFocus();
         canvas.setOnKeyPressed(e -> {
+            if (e.getCode() == KeyCode.D) {
+                bomber.setDirection("right");
+            }
 
+            if (e.getCode() == KeyCode.A) {
+                bomber.setDirection("left");
+            }
+
+            if (e.getCode() == KeyCode.W) {
+                bomber.setDirection("up");
+            }
+
+            if (e.getCode() == KeyCode.S) {
+                bomber.setDirection("down");
+            }
         });
-        canvas.setOnKeyReleased(e -> {
 
+        canvas.setOnKeyReleased(e -> {
+            if(e.getCode() == KeyCode.A) {
+                bomber.setDirection("none");             
+            }
+            if(e.getCode() == KeyCode.S) {
+                bomber.setDirection("none"); 
+            }
+            if(e.getCode() == KeyCode.D) {
+                bomber.setDirection("none"); 
+            }
+            if(e.getCode() == KeyCode.W) {
+                bomber.setDirection("none"); 
+            }
         });
 
         // Tao root container
@@ -102,7 +128,7 @@ public class BombermanGame extends Application {
                         stillObjects.add(grass);
                         
                         if (content.charAt(j) == 'p') {
-                            Entity bomber = new Bomber(j, i, Sprite.player_right.getFxImage());
+                            bomber = new Bomber(j, i, Sprite.player_right.getFxImage());
                             entities.add(bomber);
                         } else if (content.charAt(j) == '1') {
                             Entity balloon = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
