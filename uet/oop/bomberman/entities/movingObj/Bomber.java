@@ -66,4 +66,5 @@ public class Bomber extends movingObjects {
 
         return true;
     }
+    
 }
