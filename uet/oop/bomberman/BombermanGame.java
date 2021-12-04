@@ -161,6 +161,9 @@ public class BombermanGame extends Application {
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
+                        } else if (content.charAt(j) == '*') {
+                            Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
+                            stillObjects.add(brick);
                         }
                     }
                 }
