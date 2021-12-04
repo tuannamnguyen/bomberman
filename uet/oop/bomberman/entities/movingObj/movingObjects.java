@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
 
 public abstract class movingObjects extends Entity {
-    protected int speed = 2;
+    protected int speed = 32;
 
     public movingObjects(int x, int y, Image img) {
         super(x, y, img);

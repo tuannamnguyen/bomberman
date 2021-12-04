@@ -33,11 +33,9 @@ public class BombermanGame extends Application {
 
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
-    public static HashSet<KeyCode> currentlyPressedKey = new HashSet<>();
 
     private GraphicsContext gc;
     private Canvas canvas;
-    public static final long startNanoTime = System.nanoTime();
     private static List<Entity> entities = new ArrayList<>();
     private static List<Entity> stillObjects = new ArrayList<>();
 
@@ -55,10 +53,10 @@ public class BombermanGame extends Application {
         canvas.setFocusTraversable(true);
         canvas.requestFocus();
         canvas.setOnKeyPressed(e -> {
-            currentlyPressedKey.add(e.getCode());
+
         });
         canvas.setOnKeyReleased(e -> {
-            currentlyPressedKey.remove(e.getCode());
+
         });
 
         // Tao root container
