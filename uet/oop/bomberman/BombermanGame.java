@@ -27,12 +27,11 @@ import uet.oop.bomberman.entities.stillObj.SpeedItem;
 import uet.oop.bomberman.entities.stillObj.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
-
 public class BombermanGame extends Application {
 
     public static boolean gameOver = false;
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
+    public static final int WIDTH = 31;
+    public static final int HEIGHT = 13;
     public static Bomber bomber;
 
     private GraphicsContext gc;
@@ -50,7 +49,7 @@ public class BombermanGame extends Application {
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
-        //Handle key events
+        // Handle key events
         canvas.setFocusTraversable(true);
         canvas.requestFocus();
         canvas.setOnKeyPressed(e -> {
@@ -72,17 +71,17 @@ public class BombermanGame extends Application {
         });
 
         canvas.setOnKeyReleased(e -> {
-            if(e.getCode() == KeyCode.A) {
-                bomber.setDirection("none");             
+            if (e.getCode() == KeyCode.A) {
+                bomber.setDirection("none");
             }
-            if(e.getCode() == KeyCode.S) {
-                bomber.setDirection("none"); 
+            if (e.getCode() == KeyCode.S) {
+                bomber.setDirection("none");
             }
-            if(e.getCode() == KeyCode.D) {
-                bomber.setDirection("none"); 
+            if (e.getCode() == KeyCode.D) {
+                bomber.setDirection("none");
             }
-            if(e.getCode() == KeyCode.W) {
-                bomber.setDirection("none"); 
+            if (e.getCode() == KeyCode.W) {
+                bomber.setDirection("none");
             }
         });
 
@@ -91,7 +90,7 @@ public class BombermanGame extends Application {
         root.getChildren().add(canvas);
 
         createMap();
-        
+
         // Game loop
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -102,7 +101,6 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        
         // Tao scene
         Scene scene = new Scene(root);
 
@@ -116,7 +114,7 @@ public class BombermanGame extends Application {
         try {
             FileReader map = new FileReader("src/uet/oop/bomberman/res/levels/lvl1.txt");
             Scanner fileReader = new Scanner(map);
-            
+
             for (int i = 0; fileReader.hasNextLine(); i++) {
                 String content = fileReader.nextLine();
                 for (int j = 0; j < content.length(); j++) {
@@ -127,7 +125,7 @@ public class BombermanGame extends Application {
                     } else {
                         Entity grass = new Grass(j, i, Sprite.grass.getFxImage());
                         stillObjects.add(grass);
-                        
+
                         if (content.charAt(j) == 'p') {
                             bomber = new Bomber(j, i, Sprite.player_right.getFxImage());
                             entities.add(bomber);
@@ -174,8 +172,7 @@ public class BombermanGame extends Application {
             System.out.println("Error FileNotFound");
             e.printStackTrace();
         }
-        
-        
+
     }
 
     public void update() {
