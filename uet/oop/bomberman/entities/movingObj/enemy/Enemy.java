@@ -11,7 +11,7 @@ public abstract class Enemy extends movingObjects{
     }
 
     @Override
-    public boolean canMove() {
+    public boolean canMove(int x, int y) {
         return false;
     }
 }

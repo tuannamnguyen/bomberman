@@ -12,4 +12,9 @@ public class Oneal extends Enemy {
     public void update() {
         
     }
+
+    @Override
+    public boolean canMove(int x, int y) {
+        return true;   
+    }
 }

@@ -30,6 +30,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class BombermanGame extends Application {
 
+    public static boolean gameOver = false;
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
     public static Bomber bomber;

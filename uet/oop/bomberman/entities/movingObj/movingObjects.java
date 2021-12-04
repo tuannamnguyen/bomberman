@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.Entity;
 public abstract class movingObjects extends Entity {
     protected int speed = 32;
     protected String direction = "";
+    protected boolean isAlive = true;
 
     public movingObjects(int x, int y, Image img) {
         super(x, y, img);
@@ -27,7 +28,7 @@ public abstract class movingObjects extends Entity {
         this.direction = direction;
     }
 
-    public abstract boolean canMove();
+    public abstract boolean canMove(int x, int y);
 }
 
 
