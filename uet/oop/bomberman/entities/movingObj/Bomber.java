@@ -1,12 +1,11 @@
 package uet.oop.bomberman.entities.movingObj;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.stillObj.Brick;
-import uet.oop.bomberman.entities.stillObj.Grass;
 import uet.oop.bomberman.entities.stillObj.Wall;
+import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends movingObjects {
 
@@ -52,7 +51,7 @@ public class Bomber extends movingObjects {
     public boolean canMove(int x, int y) {
         for (Entity e : BombermanGame.getEntities()) {
             if (e.getX() == x && e.getY() == y) {
-                this.isRemoved = true;
+                this.setRemoved(true);
                 BombermanGame.gameOver = true;
                 return true;
             }

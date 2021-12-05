@@ -71,8 +71,12 @@ public class BombermanGame extends Application {
             }
 
             if (e.getCode() == KeyCode.SPACE) {
-                Bomb bomb = new Bomb(bomber.getX() / 32, bomber.getY() / 32, Sprite.bomb.getFxImage());
-                entities.add(bomb);
+                if (!Bomb.existed) {
+                    Bomb bomb = new Bomb(bomber.getX() / 32, bomber.getY() / 32, Sprite.bomb.getFxImage());
+                    entities.add(bomb);
+                    Bomb.existed = true;
+                }
+
             }
         });
 
@@ -182,7 +186,9 @@ public class BombermanGame extends Application {
     }
 
     public void update() {
-        entities.forEach(Entity::update);
+        for (int i = 0; i < entities.size(); i++) {
+            entities.get(i).update();
+        }
     }
 
     public void render() {
