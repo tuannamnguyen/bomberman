@@ -52,7 +52,7 @@ public class Bomber extends movingObjects {
     public boolean canMove(int x, int y) {
         for (Entity e : BombermanGame.getEntities()) {
             if (e.getX() == x && e.getY() == y) {
-                this.isAlive = false;
+                this.isRemoved = true;
                 BombermanGame.gameOver = true;
                 return true;
             }

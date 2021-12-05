@@ -45,7 +45,7 @@ public class Balloon extends Enemy {
 
             }
 
-            refresh = 20;
+            refresh = 60;
         } else {
             refresh--;
         }

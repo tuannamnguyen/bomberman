@@ -18,6 +18,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.movingObj.Bomber;
 import uet.oop.bomberman.entities.movingObj.enemy.Balloon;
 import uet.oop.bomberman.entities.movingObj.enemy.Oneal;
+import uet.oop.bomberman.entities.stillObj.Bomb;
 import uet.oop.bomberman.entities.stillObj.BombItem;
 import uet.oop.bomberman.entities.stillObj.Brick;
 import uet.oop.bomberman.entities.stillObj.FlameItem;
@@ -67,6 +68,11 @@ public class BombermanGame extends Application {
 
             if (e.getCode() == KeyCode.S) {
                 bomber.setDirection("down");
+            }
+
+            if (e.getCode() == KeyCode.SPACE) {
+                Bomb bomb = new Bomb(bomber.getX() / 32, bomber.getY() / 32, Sprite.bomb.getFxImage());
+                entities.add(bomb);
             }
         });
 
