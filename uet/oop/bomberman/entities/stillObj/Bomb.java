@@ -19,23 +19,23 @@ public class Bomb extends Entity {
             Entity explosionCenter = new Explosion(x / 32, y / 32, Sprite.bomb_exploded2.getFxImage());
             BombermanGame.getStillObjects().add(explosionCenter);
 
-            if (!isWall(x + 32, y)) {
+            if (BombermanGame.getAt(x + 32, y) instanceof Wall == false) {
                 Entity explosionRight = new Explosion((x + 32) / 32, y / 32, Sprite.explosion_horizontal_right_last2.getFxImage());
                 BombermanGame.getStillObjects().add(explosionRight);
 
             }
 
-            if (!isWall(x - 32, y)) {
+            if (BombermanGame.getAt(x - 32, y) instanceof Wall == false) {
                 Entity explosionLeft = new Explosion((x - 32) / 32, y / 32, Sprite.explosion_horizontal_left_last2.getFxImage());
                 BombermanGame.getStillObjects().add(explosionLeft);
             }
 
-            if (!isWall(x, y + 32)) {
+            if (BombermanGame.getAt(x, y + 32) instanceof Wall == false) {
                 Entity explosionDown = new Explosion(x / 32, (y + 32) / 32, Sprite.explosion_vertical_down_last2.getFxImage());
                 BombermanGame.getStillObjects().add(explosionDown);
             }
 
-            if (!isWall(x, y - 32)) {
+            if (BombermanGame.getAt(x, y - 32) instanceof Wall == false) {
                 Entity explosionUp = new Explosion(x / 32, (y - 32) / 32, Sprite.explosion_vertical_top_last2.getFxImage());
                 BombermanGame.getStillObjects().add(explosionUp);
             }
@@ -44,15 +44,5 @@ public class Bomb extends Entity {
         } else {
             countdown--;
         }
-    }
-
-    private boolean isWall(int x, int y) {
-        for (Entity e : BombermanGame.getStillObjects()) {
-            if (e instanceof Wall && e.getX() == x && e.getY() == y) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

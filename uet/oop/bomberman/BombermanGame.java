@@ -34,6 +34,7 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     public static Bomber bomber;
+    public static Portal portal;
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -165,8 +166,7 @@ public class BombermanGame extends Application {
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
                         } else if (content.charAt(j) == 'x') {
-                            Entity portal = new Portal(j, i, Sprite.portal.getFxImage());
-                            stillObjects.add(portal);
+                            portal = new Portal(j, i, Sprite.portal.getFxImage());
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);

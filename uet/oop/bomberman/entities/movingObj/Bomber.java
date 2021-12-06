@@ -3,6 +3,8 @@ package uet.oop.bomberman.entities.movingObj;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.movingObj.enemy.Enemy;
+import uet.oop.bomberman.entities.stillObj.Bomb;
 import uet.oop.bomberman.entities.stillObj.Brick;
 import uet.oop.bomberman.entities.stillObj.Wall;
 import uet.oop.bomberman.graphics.Sprite;
@@ -49,7 +51,7 @@ public class Bomber extends movingObjects {
 
     @Override
     public boolean canMove(int x, int y) {
-        for (Entity e : BombermanGame.getEntities()) {
+        /*for (Entity e : BombermanGame.getEntities()) {
             if (e.getX() == x && e.getY() == y) {
                 this.setRemoved(true);
                 BombermanGame.gameOver = true;
@@ -60,7 +62,16 @@ public class Bomber extends movingObjects {
         for (Entity e : BombermanGame.getStillObjects()) {
             if ((e instanceof Wall || e instanceof Brick) && e.getX() == x && e.getY() == y) {
                 return false;
-            }
+            }*/
+
+        if (BombermanGame.getAt(x, y) instanceof Enemy) {
+            this.setRemoved(true);
+            BombermanGame.gameOver = true;
+            return true;
+        }
+
+        if (BombermanGame.getAt(x, y) instanceof Wall || BombermanGame.getAt(x, y) instanceof Brick) {
+            return false;
         }
 
         return true;
