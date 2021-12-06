@@ -9,6 +9,8 @@ import uet.oop.bomberman.entities.stillObj.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Balloon extends Enemy {
+    private int refresh = 60;
+
     public Balloon(int x, int y, Image img) {
         super(x, y, img);
     }
@@ -54,7 +56,7 @@ public class Balloon extends Enemy {
 
     @Override
     public boolean canMove(int x, int y) {
-        for (Entity e : BombermanGame.getEntities()) {
+        /*for (Entity e : BombermanGame.getEntities()) {
             if ((e.getX() == x && e.getY() == y) && e instanceof Bomber) {
                 BombermanGame.gameOver = true;
                 return true;
@@ -67,6 +69,16 @@ public class Balloon extends Enemy {
             if ((e instanceof Wall || e instanceof Brick) && e.getX() == x && e.getY() == y) {
                 return false;
             }
+        }*/
+        Entity e = BombermanGame.getAt(x, y);
+
+        if (e instanceof Bomber) {
+            BombermanGame.gameOver = true;
+            return true;
+        }
+
+        if (e instanceof Enemy || e instanceof Wall || e instanceof Brick) {
+            return false;
         }
 
         return true;
