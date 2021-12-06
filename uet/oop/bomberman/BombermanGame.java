@@ -39,6 +39,7 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     private static List<Entity> entities = new ArrayList<>();
     private static List<Entity> stillObjects = new ArrayList<>();
+    private static List<Entity> upgrades = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -73,7 +74,7 @@ public class BombermanGame extends Application {
             if (e.getCode() == KeyCode.SPACE) {
                 if (!Bomb.existed) {
                     Bomb bomb = new Bomb(bomber.getX() / 32, bomber.getY() / 32, Sprite.bomb.getFxImage());
-                    entities.add(bomb);
+                    stillObjects.add(bomb);
                     Bomb.existed = true;
                 }
 
@@ -147,19 +148,19 @@ public class BombermanGame extends Application {
                             entities.add(oneal);
                         } else if (content.charAt(j) == 'b') {
                             Entity bombItem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
-                            stillObjects.add(bombItem);
+                            upgrades.add(bombItem);
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
                         } else if (content.charAt(j) == 'f') {
                             Entity flameItem = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
-                            stillObjects.add(flameItem);
+                            upgrades.add(flameItem);
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
                         } else if (content.charAt(j) == 's') {
                             Entity speedItem = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
-                            stillObjects.add(speedItem);
+                            upgrades.add(speedItem);
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
@@ -188,13 +189,25 @@ public class BombermanGame extends Application {
     public void update() {
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).update();
+            if (entities.get(i).isRemoved()) {
+                entities.remove(i);
+            }
+        }
+
+        for (int i = 0; i < stillObjects.size(); i++) {
+            stillObjects.get(i).update();
+            if (stillObjects.get(i).isRemoved()) {
+                stillObjects.remove(i);
+            }
         }
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        upgrades.forEach(g -> g.render(gc));
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+
     }
 
     public static List<Entity> getEntities() {
@@ -203,5 +216,31 @@ public class BombermanGame extends Application {
 
     public static List<Entity> getStillObjects() {
         return stillObjects;
+    }
+
+    public static Entity getAt(int x, int y) {
+        for (Entity e : entities) {
+            if (e.getX() == x && e.getY() == y) {
+                return e;
+            }
+        }
+
+        for (Entity e : stillObjects) {
+            if (e instanceof Grass) {
+                continue;
+            }
+
+            if (e.getX() == x && e.getY() == y) {
+                return e;
+            }
+        }
+
+        for (Entity e : upgrades) {
+            if (e.getX() == x && e.getY() == y) {
+                return e;
+            }
+        }
+
+        return null;
     }
 }
