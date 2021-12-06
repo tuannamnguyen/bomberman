@@ -56,20 +56,7 @@ public class Balloon extends Enemy {
 
     @Override
     public boolean canMove(int x, int y) {
-        /*for (Entity e : BombermanGame.getEntities()) {
-            if ((e.getX() == x && e.getY() == y) && e instanceof Bomber) {
-                BombermanGame.gameOver = true;
-                return true;
-            } else if ((e.getX() == x && e.getY() == y) && e instanceof Enemy) {
-                return false;
-            }
-        }
-
-        for (Entity e : BombermanGame.getStillObjects()) {
-            if ((e instanceof Wall || e instanceof Brick) && e.getX() == x && e.getY() == y) {
-                return false;
-            }
-        }*/
+ 
         Entity e = BombermanGame.getAt(x, y);
 
         if (e instanceof Bomber) {

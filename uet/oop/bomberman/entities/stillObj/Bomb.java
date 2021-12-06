@@ -16,7 +16,7 @@ public class Bomb extends Entity {
 
     @Override
     public void update() {
-        Entity center = BombermanGame.getAt(x / 32, y / 32);
+        Entity center = BombermanGame.getAt(x, y);
         Entity left = BombermanGame.getAt(x - 32, y);
         Entity right = BombermanGame.getAt(x + 32, y);
         Entity up = BombermanGame.getAt(x, y - 32);
@@ -65,6 +65,7 @@ public class Bomb extends Entity {
                 }
             }
             
+            this.setRemoved(true);
             
         } else {
             countdown--;

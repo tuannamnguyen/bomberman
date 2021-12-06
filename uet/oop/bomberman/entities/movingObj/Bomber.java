@@ -51,19 +51,7 @@ public class Bomber extends movingObjects {
 
     @Override
     public boolean canMove(int x, int y) {
-        /*for (Entity e : BombermanGame.getEntities()) {
-            if (e.getX() == x && e.getY() == y) {
-                this.setRemoved(true);
-                BombermanGame.gameOver = true;
-                return true;
-            }
-        }
-
-        for (Entity e : BombermanGame.getStillObjects()) {
-            if ((e instanceof Wall || e instanceof Brick) && e.getX() == x && e.getY() == y) {
-                return false;
-            }*/
-
+        
         if (BombermanGame.getAt(x, y) instanceof Enemy) {
             this.setRemoved(true);
             BombermanGame.gameOver = true;

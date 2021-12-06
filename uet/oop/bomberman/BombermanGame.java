@@ -73,10 +73,9 @@ public class BombermanGame extends Application {
             }
 
             if (e.getCode() == KeyCode.SPACE) {
-                if (!Bomb.existed) {
+                if (!this.bombExisted()) {
                     Bomb bomb = new Bomb(bomber.getX() / 32, bomber.getY() / 32, Sprite.bomb.getFxImage());
                     stillObjects.add(bomb);
-                    Bomb.existed = true;
                 }
 
             }
@@ -244,5 +243,15 @@ public class BombermanGame extends Application {
         }
 
         return null;
+    }
+
+    private boolean bombExisted() {
+        for (Entity e : stillObjects) {
+            if (e instanceof Bomb) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
