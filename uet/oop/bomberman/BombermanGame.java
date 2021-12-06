@@ -118,7 +118,7 @@ public class BombermanGame extends Application {
 
     public void createMap() {
         try {
-            FileReader map = new FileReader("src/uet/oop/bomberman/res/levels/lvl1.txt");
+            FileReader map = new FileReader("uet/oop/bomberman/res/levels/lvl1.txt");
             Scanner fileReader = new Scanner(map);
 
             for (int i = 0; fileReader.hasNextLine(); i++) {
@@ -139,7 +139,7 @@ public class BombermanGame extends Application {
                             Entity balloon = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
                             entities.add(balloon);
                         } else if (content.charAt(j) == '2') {
-                            Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage());
+                            Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage(),bomber);
                             entities.add(oneal);
                         } else if (content.charAt(j) == 'b') {
                             Entity bombItem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
