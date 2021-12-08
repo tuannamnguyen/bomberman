@@ -3,7 +3,6 @@ package uet.oop.bomberman;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,28 +15,28 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.movingObj.Balloon;
 import uet.oop.bomberman.entities.movingObj.Bomber;
-import uet.oop.bomberman.entities.movingObj.Oneal;
-import uet.oop.bomberman.entities.staticObj.BombItem;
-import uet.oop.bomberman.entities.staticObj.Brick;
-import uet.oop.bomberman.entities.staticObj.FlameItem;
-import uet.oop.bomberman.entities.staticObj.Grass;
-import uet.oop.bomberman.entities.staticObj.Portal;
-import uet.oop.bomberman.entities.staticObj.SpeedItem;
-import uet.oop.bomberman.entities.staticObj.Wall;
+import uet.oop.bomberman.entities.movingObj.enemy.Balloon;
+import uet.oop.bomberman.entities.movingObj.enemy.Oneal;
+import uet.oop.bomberman.entities.stillObj.Bomb;
+import uet.oop.bomberman.entities.stillObj.BombItem;
+import uet.oop.bomberman.entities.stillObj.Brick;
+import uet.oop.bomberman.entities.stillObj.FlameItem;
+import uet.oop.bomberman.entities.stillObj.Grass;
+import uet.oop.bomberman.entities.stillObj.Portal;
+import uet.oop.bomberman.entities.stillObj.SpeedItem;
+import uet.oop.bomberman.entities.stillObj.Wall;
 import uet.oop.bomberman.graphics.Sprite;
-
 
 public class BombermanGame extends Application {
 
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
-    public static HashSet<KeyCode> currentlyPressedKey = new HashSet<>();
+    public static boolean gameOver = false;
+    public static final int WIDTH = 31;
+    public static final int HEIGHT = 13;
+    public static Bomber bomber;
 
     private GraphicsContext gc;
     private Canvas canvas;
-    public static final long startNanoTime = System.nanoTime();
     private static List<Entity> entities = new ArrayList<>();
     private static List<Entity> stillObjects = new ArrayList<>();
 
@@ -51,14 +50,48 @@ public class BombermanGame extends Application {
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
-        //Handle key events
+        // Handle key events
         canvas.setFocusTraversable(true);
         canvas.requestFocus();
         canvas.setOnKeyPressed(e -> {
-            currentlyPressedKey.add(e.getCode());
+            if (e.getCode() == KeyCode.D) {
+                bomber.setDirection("right");
+            }
+
+            if (e.getCode() == KeyCode.A) {
+                bomber.setDirection("left");
+            }
+
+            if (e.getCode() == KeyCode.W) {
+                bomber.setDirection("up");
+            }
+
+            if (e.getCode() == KeyCode.S) {
+                bomber.setDirection("down");
+            }
+
+            if (e.getCode() == KeyCode.SPACE) {
+                if (!this.bombExisted()) {
+                    Bomb bomb = new Bomb(bomber.getX() / 32, bomber.getY() / 32, Sprite.bomb.getFxImage());
+                    stillObjects.add(bomb);
+                }
+
+            }
         });
+
         canvas.setOnKeyReleased(e -> {
-            currentlyPressedKey.remove(e.getCode());
+            if (e.getCode() == KeyCode.A) {
+                bomber.setDirection("none");
+            }
+            if (e.getCode() == KeyCode.S) {
+                bomber.setDirection("none");
+            }
+            if (e.getCode() == KeyCode.D) {
+                bomber.setDirection("none");
+            }
+            if (e.getCode() == KeyCode.W) {
+                bomber.setDirection("none");
+            }
         });
 
         // Tao root container
@@ -66,7 +99,7 @@ public class BombermanGame extends Application {
         root.getChildren().add(canvas);
 
         createMap();
-        
+
         // Game loop
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -77,7 +110,6 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        
         // Tao scene
         Scene scene = new Scene(root);
 
@@ -89,9 +121,9 @@ public class BombermanGame extends Application {
 
     public void createMap() {
         try {
-            FileReader map = new FileReader("res\\levels\\lvl1.txt");
+            FileReader map = new FileReader("src/uet/oop/bomberman/res/levels/lvl1.txt");
             Scanner fileReader = new Scanner(map);
-            
+
             for (int i = 0; fileReader.hasNextLine(); i++) {
                 String content = fileReader.nextLine();
                 for (int j = 0; j < content.length(); j++) {
@@ -102,15 +134,15 @@ public class BombermanGame extends Application {
                     } else {
                         Entity grass = new Grass(j, i, Sprite.grass.getFxImage());
                         stillObjects.add(grass);
-                        
+
                         if (content.charAt(j) == 'p') {
-                            Entity bomber = new Bomber(j, i, Sprite.player_right.getFxImage());
+                            bomber = new Bomber(j, i, Sprite.player_right.getFxImage());
                             entities.add(bomber);
                         } else if (content.charAt(j) == '1') {
                             Entity balloon = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
                             entities.add(balloon);
                         } else if (content.charAt(j) == '2') {
-                            Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage());
+                            Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage(),bomber);
                             entities.add(oneal);
                         } else if (content.charAt(j) == 'b') {
                             Entity bombItem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
@@ -136,26 +168,44 @@ public class BombermanGame extends Application {
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
+                        } else if (content.charAt(j) == '*') {
+                            Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
+                            stillObjects.add(brick);
                         }
                     }
                 }
             }
+
+            fileReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("Error FileNotFound");
             e.printStackTrace();
         }
-        
-        
+
     }
 
     public void update() {
-        entities.forEach(Entity::update);
+        for (int i = 0; i < entities.size(); i++) {
+            entities.get(i).update();
+            if (entities.get(i).isRemoved()) {
+                entities.remove(i);
+            }
+        }
+
+        for (int i = 0; i < stillObjects.size(); i++) {
+            stillObjects.get(i).update();
+            if (stillObjects.get(i).isRemoved()) {
+                stillObjects.remove(i);
+            }
+        }
     }
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+
     }
 
     public static List<Entity> getEntities() {
@@ -165,8 +215,35 @@ public class BombermanGame extends Application {
     public static List<Entity> getStillObjects() {
         return stillObjects;
     }
-    
-    public BombermanGame currentGame() {
-        return this;
+
+    public static Entity getAt(int x, int y) {
+        for (Entity e : entities) {
+            if (e.getX() == x && e.getY() == y) {
+                return e;
+            }
+        }
+
+        for (int i = stillObjects.size() - 1; i >= 0; i--) {
+            Entity e = stillObjects.get(i);
+            if (e instanceof Grass) {
+                continue;
+            }
+
+            if (e.getX() == x && e.getY() == y) {
+                return e;
+            }
+        }
+
+        return null;
+    }
+
+    private boolean bombExisted() {
+        for (Entity e : stillObjects) {
+            if (e instanceof Bomb) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

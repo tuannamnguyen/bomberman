@@ -2,49 +2,45 @@ package uet.oop.bomberman.entities;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.shape.Rectangle;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.graphics.Sprite;
 
-public abstract class Entity extends Rectangle {
-    /**
-     * Các thuộc tính:
-     * x: tọa độ x tính từ góc trên bên trái canvas.
-     * y: tọa độ y tính từ góc trên bên trái canvas.
-     * w và h là chiều dài và rộng của hình chữ nhật bao quanh đối tượng.
-     * 
-     * truy cập các thuộc tính trên bằng setter và getter của lớp rectangle.
-     */
+public abstract class Entity {
+    //Tọa độ X tính từ góc trái trên trong Canvas
+    protected int x;
 
-    protected int speed = 1;
+    //Tọa độ Y tính từ góc trái trên trong Canvas
+    protected int y;
 
     protected Image img;
 
-    // Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
-    public Entity(int xUnit, int yUnit, Image img) {  
-        super(xUnit * Sprite.SCALED_SIZE, yUnit * Sprite.SCALED_SIZE, img.getWidth(), img.getHeight());
+    private boolean isRemoved = false;
+
+    //Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
+    public Entity( int xUnit, int yUnit, Image img) {
+        this.x = xUnit * Sprite.SCALED_SIZE;
+        this.y = yUnit * Sprite.SCALED_SIZE;
         this.img = img;
     }
 
     public void render(GraphicsContext gc) {
-        gc.drawImage(img, this.getX(), this.getY());
+        gc.drawImage(img, x, y);
     }
-
     public abstract void update();
 
-    public boolean collide(Entity other) {
-        return (this.getX() < other.getX() + other.getWidth() &&
-                this.getX() + this.getWidth() > other.getX() &&
-                this.getY() < other.getY() + other.getHeight() &&
-                this.getHeight() + this.getY() > other.getY());
+    public int getX() {
+        return x;
     }
 
-    public int getSpeed() {
-        return speed;
+    public void setX(int x) {
+        this.x = x;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public Image getImg() {
@@ -54,7 +50,14 @@ public abstract class Entity extends Rectangle {
     public void setImg(Image img) {
         this.img = img;
     }
-    
+
+    public boolean isRemoved() {
+        return isRemoved;
+    }
+
+    public void setRemoved(boolean isRemoved) {
+        this.isRemoved = isRemoved;
+    }
 
     
 }
