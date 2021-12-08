@@ -142,7 +142,7 @@ public class BombermanGame extends Application {
                             Entity balloon = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
                             entities.add(balloon);
                         } else if (content.charAt(j) == '2') {
-                            Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage());
+                            Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage(),bomber);
                             entities.add(oneal);
                         } else if (content.charAt(j) == 'b') {
                             Entity bombItem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
