@@ -34,13 +34,11 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     public static Bomber bomber;
-    public static Portal portal;
 
     private GraphicsContext gc;
     private Canvas canvas;
     private static List<Entity> entities = new ArrayList<>();
     private static List<Entity> stillObjects = new ArrayList<>();
-    private static List<Entity> upgrades = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -148,24 +146,25 @@ public class BombermanGame extends Application {
                             entities.add(oneal);
                         } else if (content.charAt(j) == 'b') {
                             Entity bombItem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
-                            upgrades.add(bombItem);
+                            stillObjects.add(bombItem);
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
                         } else if (content.charAt(j) == 'f') {
                             Entity flameItem = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
-                            upgrades.add(flameItem);
+                            stillObjects.add(flameItem);
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
                         } else if (content.charAt(j) == 's') {
                             Entity speedItem = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
-                            upgrades.add(speedItem);
+                            stillObjects.add(speedItem);
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
                         } else if (content.charAt(j) == 'x') {
-                            portal = new Portal(j, i, Sprite.portal.getFxImage());
+                            Entity portal = new Portal(j, i, Sprite.portal.getFxImage());
+                            stillObjects.add(portal);
 
                             Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
                             stillObjects.add(brick);
@@ -203,9 +202,7 @@ public class BombermanGame extends Application {
 
     public void render() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        portal.render(gc);
 
-        upgrades.forEach(g -> g.render(gc));
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
 
@@ -226,17 +223,12 @@ public class BombermanGame extends Application {
             }
         }
 
-        for (Entity e : stillObjects) {
+        for (int i = stillObjects.size() - 1; i >= 0; i--) {
+            Entity e = stillObjects.get(i);
             if (e instanceof Grass) {
                 continue;
             }
 
-            if (e.getX() == x && e.getY() == y) {
-                return e;
-            }
-        }
-
-        for (Entity e : upgrades) {
             if (e.getX() == x && e.getY() == y) {
                 return e;
             }

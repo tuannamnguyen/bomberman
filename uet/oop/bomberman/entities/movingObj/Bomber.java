@@ -2,9 +2,7 @@ package uet.oop.bomberman.entities.movingObj;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.movingObj.enemy.Enemy;
-import uet.oop.bomberman.entities.stillObj.Bomb;
 import uet.oop.bomberman.entities.stillObj.Brick;
 import uet.oop.bomberman.entities.stillObj.Wall;
 import uet.oop.bomberman.graphics.Sprite;
