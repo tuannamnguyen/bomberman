@@ -10,7 +10,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class Oneal extends Enemy {
 
-    private int refresh = 20;
+    private int refresh = 30;
     public Bomber bomber;
 
     public Oneal(int x, int y, Image img,Bomber bomber) {
@@ -86,7 +86,7 @@ public class Oneal extends Enemy {
                     }
             }
 
-            refresh = 20;
+            refresh = 30;
         } else {
             refresh--;
         }
