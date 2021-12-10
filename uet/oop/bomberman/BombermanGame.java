@@ -238,10 +238,15 @@ public class BombermanGame extends Application {
     }
 
     private boolean bombExisted() {
+        int count = 0;
         for (Entity e : stillObjects) {
             if (e instanceof Bomb) {
-                return true;
+                count++;
             }
+        }
+
+        if (count == Bomber.bombCount) {
+            return true;
         }
 
         return false;
