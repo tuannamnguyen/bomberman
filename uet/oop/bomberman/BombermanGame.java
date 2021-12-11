@@ -104,6 +104,9 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+                if (bomber.isRemoved()) {
+                    canvas.setDisable(true);
+                }
                 render();
                 update();
             }

@@ -24,6 +24,11 @@ public class Bomb extends Entity {
             Entity up = BombermanGame.getAt(x, y - 32 * i);
             Entity down = BombermanGame.getAt(x, y + 32 * i);
 
+            Entity prevLeft = BombermanGame.getAt(x - 32 * (i - 1), y);
+            Entity prevRight = BombermanGame.getAt(x + 32 * (i - 1), y);
+            Entity prevUp = BombermanGame.getAt(x, y - 32 * (i - 1));
+            Entity prevDown = BombermanGame.getAt(x, y + 32 * (i - 1));
+
             if (countdown == 0) {
                 Entity explosionCenter = new Explosion(x / 32, y / 32, Sprite.bomb_exploded2.getFxImage());
                 BombermanGame.getStillObjects().add(explosionCenter);
@@ -31,7 +36,7 @@ public class Bomb extends Entity {
                     center.setRemoved(true);
                 }
 
-                if (right instanceof Wall == false) {
+                if (!(right instanceof Wall) && !(prevRight instanceof Wall)) {
                     Entity explosionRight = new Explosion((x + 32 * i) / 32, y / 32,
                             Sprite.explosion_horizontal_right_last2.getFxImage());
                     BombermanGame.getStillObjects().add(explosionRight);
@@ -41,7 +46,7 @@ public class Bomb extends Entity {
                     }
                 }
 
-                if (left instanceof Wall == false) {
+                if (!(left instanceof Wall) && !(prevLeft instanceof Wall)) {
                     Entity explosionLeft = new Explosion((x - 32 * i) / 32, y / 32,
                             Sprite.explosion_horizontal_left_last2.getFxImage());
                     BombermanGame.getStillObjects().add(explosionLeft);
@@ -51,7 +56,7 @@ public class Bomb extends Entity {
                     }
                 }
 
-                if (down instanceof Wall == false) {
+                if (!(down instanceof Wall) && !(prevDown instanceof Wall)) {
                     Entity explosionDown = new Explosion(x / 32, (y + 32 * i) / 32,
                             Sprite.explosion_vertical_down_last2.getFxImage());
                     BombermanGame.getStillObjects().add(explosionDown);
@@ -61,7 +66,7 @@ public class Bomb extends Entity {
                     }
                 }
 
-                if (up instanceof Wall == false) {
+                if (!(up instanceof Wall) && !(prevUp instanceof Wall)) {
                     Entity explosionUp = new Explosion(x / 32, (y - 32 * i) / 32,
                             Sprite.explosion_vertical_top_last2.getFxImage());
                     BombermanGame.getStillObjects().add(explosionUp);
