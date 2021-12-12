@@ -61,6 +61,7 @@ public class Balloon extends Enemy {
 
         if (e instanceof Bomber) {
             BombermanGame.gameOver = true;
+            e.setRemoved(true);
             return true;
         }
 

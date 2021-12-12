@@ -13,10 +13,13 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.movingObj.Bomber;
 import uet.oop.bomberman.entities.movingObj.enemy.Balloon;
+import uet.oop.bomberman.entities.movingObj.enemy.Enemy;
 import uet.oop.bomberman.entities.movingObj.enemy.Oneal;
 import uet.oop.bomberman.entities.stillObj.Bomb;
 import uet.oop.bomberman.entities.stillObj.BombItem;
@@ -34,6 +37,7 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     public static Bomber bomber;
+    public static int enemyCount = 0;
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -95,8 +99,8 @@ public class BombermanGame extends Application {
         });
 
         // Tao root container
-        Group root = new Group();
-        root.getChildren().add(canvas);
+        BorderPane root = new BorderPane();
+        root.setCenter(canvas);
 
         createMap();
 
@@ -107,8 +111,13 @@ public class BombermanGame extends Application {
                 if (bomber.isRemoved()) {
                     canvas.setDisable(true);
                 }
+
                 render();
                 update();
+            
+                if (levelFinished()) {
+                    // TODO
+                }
             }
         };
         timer.start();
@@ -144,9 +153,11 @@ public class BombermanGame extends Application {
                         } else if (content.charAt(j) == '1') {
                             Entity balloon = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
                             entities.add(balloon);
+                            enemyCount++;
                         } else if (content.charAt(j) == '2') {
                             Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage(),bomber);
                             entities.add(oneal);
+                            enemyCount++;
                         } else if (content.charAt(j) == 'b') {
                             Entity bombItem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
                             stillObjects.add(bombItem);
@@ -191,6 +202,9 @@ public class BombermanGame extends Application {
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).update();
             if (entities.get(i).isRemoved()) {
+                if (entities.get(i) instanceof Enemy) {
+                    enemyCount--;
+                }
                 entities.remove(i);
             }
         }
@@ -249,6 +263,14 @@ public class BombermanGame extends Application {
         }
 
         if (count == Bomber.bombCount) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean levelFinished() {
+        if (Bomber.hitPortal && enemyCount == 0) {
             return true;
         }
 
