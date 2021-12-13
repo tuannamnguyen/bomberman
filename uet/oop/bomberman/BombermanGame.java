@@ -1,5 +1,6 @@
 package uet.oop.bomberman;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -8,13 +9,16 @@ import java.util.Scanner;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Group;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.movingObj.Bomber;
@@ -114,7 +118,7 @@ public class BombermanGame extends Application {
 
                 render();
                 update();
-            
+
                 if (levelFinished()) {
                     // TODO
                 }
@@ -123,10 +127,11 @@ public class BombermanGame extends Application {
         timer.start();
 
         // Tao scene
-        Scene scene = new Scene(root);
+        Scene gameScene = new Scene(root);
+        Scene menuScene = new Scene(menu(stage, gameScene));
 
         // Them scene vao stage
-        stage.setScene(scene);
+        stage.setScene(menuScene);
         stage.setTitle("Bomberman Game");
         stage.show();
     }
@@ -155,7 +160,7 @@ public class BombermanGame extends Application {
                             entities.add(balloon);
                             enemyCount++;
                         } else if (content.charAt(j) == '2') {
-                            Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage(),bomber);
+                            Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage(), bomber);
                             entities.add(oneal);
                             enemyCount++;
                         } else if (content.charAt(j) == 'b') {
@@ -275,5 +280,27 @@ public class BombermanGame extends Application {
         }
 
         return false;
+    }
+
+    private VBox menu(Stage stage, Scene gameScene) {
+        VBox vbox = new VBox();
+        try {
+            Image background = new Image(new FileInputStream("src/uet/oop/bomberman/res/menu.png"));
+            ImageView imageView = new ImageView(background);
+            imageView.setFitHeight(431);
+            imageView.setFitWidth(768);
+
+            Button play = new Button("Play");
+            play.setOnAction(e -> {
+                stage.setScene(gameScene);
+            });
+
+            vbox.getChildren().addAll(imageView, play);
+            vbox.setAlignment(Pos.CENTER);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return vbox;
     }
 }
