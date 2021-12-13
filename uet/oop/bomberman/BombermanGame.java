@@ -1,5 +1,6 @@
 package uet.oop.bomberman;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
@@ -8,15 +9,21 @@ import java.util.Scanner;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Group;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.movingObj.Bomber;
 import uet.oop.bomberman.entities.movingObj.enemy.Balloon;
+import uet.oop.bomberman.entities.movingObj.enemy.Enemy;
 import uet.oop.bomberman.entities.movingObj.enemy.Oneal;
 import uet.oop.bomberman.entities.stillObj.Bomb;
 import uet.oop.bomberman.entities.stillObj.BombItem;
@@ -34,6 +41,7 @@ public class BombermanGame extends Application {
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     public static Bomber bomber;
+    public static int enemyCount = 0;
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -95,8 +103,8 @@ public class BombermanGame extends Application {
         });
 
         // Tao root container
-        Group root = new Group();
-        root.getChildren().add(canvas);
+        BorderPane root = new BorderPane();
+        root.setCenter(canvas);
 
         createMap();
 
@@ -104,17 +112,26 @@ public class BombermanGame extends Application {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
+                if (bomber.isRemoved()) {
+                    canvas.setDisable(true);
+                }
+
                 render();
                 update();
+
+                if (levelFinished()) {
+                    // TODO
+                }
             }
         };
         timer.start();
 
         // Tao scene
-        Scene scene = new Scene(root);
+        Scene gameScene = new Scene(root);
+        Scene menuScene = new Scene(menu(stage, gameScene));
 
         // Them scene vao stage
-        stage.setScene(scene);
+        stage.setScene(menuScene);
         stage.setTitle("Bomberman Game");
         stage.show();
     }
@@ -141,9 +158,11 @@ public class BombermanGame extends Application {
                         } else if (content.charAt(j) == '1') {
                             Entity balloon = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
                             entities.add(balloon);
+                            enemyCount++;
                         } else if (content.charAt(j) == '2') {
-                            Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage(),bomber);
+                            Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage(), bomber);
                             entities.add(oneal);
+                            enemyCount++;
                         } else if (content.charAt(j) == 'b') {
                             Entity bombItem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
                             stillObjects.add(bombItem);
@@ -188,6 +207,9 @@ public class BombermanGame extends Application {
         for (int i = 0; i < entities.size(); i++) {
             entities.get(i).update();
             if (entities.get(i).isRemoved()) {
+                if (entities.get(i) instanceof Enemy) {
+                    enemyCount--;
+                }
                 entities.remove(i);
             }
         }
@@ -238,12 +260,47 @@ public class BombermanGame extends Application {
     }
 
     private boolean bombExisted() {
+        int count = 0;
         for (Entity e : stillObjects) {
             if (e instanceof Bomb) {
-                return true;
+                count++;
             }
         }
 
+        if (count == Bomber.bombCount) {
+            return true;
+        }
+
         return false;
+    }
+
+    private boolean levelFinished() {
+        if (Bomber.hitPortal && enemyCount == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private VBox menu(Stage stage, Scene gameScene) {
+        VBox vbox = new VBox();
+        try {
+            Image background = new Image(new FileInputStream("src/uet/oop/bomberman/res/menu.png"));
+            ImageView imageView = new ImageView(background);
+            imageView.setFitHeight(431);
+            imageView.setFitWidth(768);
+
+            Button play = new Button("Play");
+            play.setOnAction(e -> {
+                stage.setScene(gameScene);
+            });
+
+            vbox.getChildren().addAll(imageView, play);
+            vbox.setAlignment(Pos.CENTER);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return vbox;
     }
 }
