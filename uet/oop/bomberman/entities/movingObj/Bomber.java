@@ -14,6 +14,8 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends movingObjects {
     public static int bombCount = 1;
+    public static boolean hitPortal = false;
+    private int speedRate = 1;
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -22,26 +24,26 @@ public class Bomber extends movingObjects {
     @Override
     public void update() {
         if (this.direction.equalsIgnoreCase("RIGHT")) {
-            if (this.canMove(x + speed, y)) {
-                this.x += speed;
+            if (this.canMove(x + speed * speedRate, y)) {
+                this.x += speed * speedRate;
                 this.img = Sprite.player_right.getFxImage();
             }
 
         } else if (this.direction.equalsIgnoreCase("LEFT")) {
-            if (this.canMove(x - speed, y)) {
-                this.x -= speed;
+            if (this.canMove(x - speed * speedRate, y)) {
+                this.x -= speed * speedRate;
                 this.img = Sprite.player_left.getFxImage();
             }
 
         } else if (this.direction.equalsIgnoreCase("UP")) {
-            if (this.canMove(x, y - speed)) {
-                this.y -= speed;
+            if (this.canMove(x, y - speed * speedRate)) {
+                this.y -= speed * speedRate;
                 this.img = Sprite.player_up.getFxImage();
             }
 
         } else if (this.direction.equalsIgnoreCase("DOWN")) {
-            if (this.canMove(x, y + speed)) {
-                this.y += speed;
+            if (this.canMove(x, y + speed * speedRate)) {
+                this.y += speed * speedRate;
                 this.img = Sprite.player_down.getFxImage();
             }
 
@@ -55,6 +57,9 @@ public class Bomber extends movingObjects {
 
     @Override
     public boolean canMove(int x, int y) {
+        if (BombermanGame.getAt(x, y) instanceof Wall || BombermanGame.getAt(x, y) instanceof Brick) {
+            return false;
+        }
 
         if (BombermanGame.getAt(x, y) instanceof Enemy) {
             this.setRemoved(true);
@@ -62,12 +67,8 @@ public class Bomber extends movingObjects {
             return true;
         }
 
-        if (BombermanGame.getAt(x, y) instanceof Wall || BombermanGame.getAt(x, y) instanceof Brick) {
-            return false;
-        }
-
         if (BombermanGame.getAt(x, y) instanceof SpeedItem) {
-            // TODO
+            speedRate++;
             BombermanGame.getAt(x, y).setRemoved(true);
             return true;
         }
@@ -85,7 +86,7 @@ public class Bomber extends movingObjects {
         }
 
         if (BombermanGame.getAt(x, y) instanceof Portal) {
-
+            hitPortal = true;
             return true;
         }
 
