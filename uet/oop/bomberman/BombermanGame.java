@@ -49,6 +49,7 @@ public class BombermanGame extends Application {
     private static List<Entity> stillObjects = new ArrayList<>();
 
     public static void main(String[] args) {
+        Sound.ThemeSound();
         launch(args);
     }
 
