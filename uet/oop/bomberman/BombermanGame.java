@@ -225,6 +225,11 @@ public class BombermanGame extends Application {
             entities.get(i).update();
             if (entities.get(i).isRemoved()) {
                 if (entities.get(i) instanceof Enemy) {
+                    if(entities.get(i) instanceof Balloon) {
+                        Sound.playSound("balloonDeath");
+                    } else if (entities.get(i) instanceof Oneal ) {
+                        Sound.playSound("skullHeadDeath");
+                    }
                     enemyCount--;
                     points += 10;
                     System.out.println(points);
