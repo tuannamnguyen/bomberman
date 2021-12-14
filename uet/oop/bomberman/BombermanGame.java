@@ -9,6 +9,8 @@ import java.util.Scanner;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.beans.binding.Bindings;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -18,7 +20,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.movingObj.Bomber;
@@ -37,11 +41,12 @@ import uet.oop.bomberman.graphics.Sprite;
 
 public class BombermanGame extends Application {
 
-    public static boolean gameOver = false;
     public static final int WIDTH = 31;
     public static final int HEIGHT = 13;
     public static Bomber bomber;
     public static int enemyCount = 0;
+    public static int points = 0;
+    private int currentLevel = 1;
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -49,6 +54,7 @@ public class BombermanGame extends Application {
     private static List<Entity> stillObjects = new ArrayList<>();
 
     public static void main(String[] args) {
+        Sound.ThemeSound();
         launch(args);
     }
 
@@ -102,11 +108,31 @@ public class BombermanGame extends Application {
             }
         });
 
+        HBox scoreBar = new HBox();
+        Text score = new Text();
+        Button playAgain = new Button("Play again");
+        
+        playAgain.setOnAction(e -> {
+            bomber.setRemoved(true);
+            enemyCount = 0;
+            points = 0;
+            gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+            createMap(0);
+        });
+
+        score.setStyle("-fx-font: 24 arial;");
+        scoreBar.setStyle("-fx-background-color: #336699;");
+        scoreBar.setPadding(new Insets(15, 12, 15, 12));
+        scoreBar.setSpacing(10);
+        scoreBar.getChildren().addAll(score, playAgain);
+
         // Tao root container
         BorderPane root = new BorderPane();
+        score.textProperty().bind(Bindings.createStringBinding(() -> ("Score: " + points)));
         root.setCenter(canvas);
+        root.setTop(scoreBar);
 
-        createMap();
+        createMap(currentLevel);
 
         // Game loop
         AnimationTimer timer = new AnimationTimer() {
@@ -114,13 +140,24 @@ public class BombermanGame extends Application {
             public void handle(long l) {
                 if (bomber.isRemoved()) {
                     canvas.setDisable(true);
+                    BorderPane endPane = new BorderPane();
+                    endPane.setCenter(new Text("Game over!"));
+                    Scene endScene = new Scene(endPane, 800, 600);
+                    stage.setScene(endScene);
                 }
 
                 render();
                 update();
 
                 if (levelFinished()) {
-                    // TODO
+                    bomber.setRemoved(true);
+                    enemyCount = 0;
+                    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+                    currentLevel++;
+                    createMap(currentLevel);
+                    playAgain.setDisable(false);
+                } else {
+                    playAgain.setDisable(true);
                 }
             }
         };
@@ -136,9 +173,9 @@ public class BombermanGame extends Application {
         stage.show();
     }
 
-    public void createMap() {
+    public void createMap(int level) {
         try {
-            FileReader map = new FileReader("src/uet/oop/bomberman/res/levels/lvl1.txt");
+            FileReader map = new FileReader("src/uet/oop/bomberman/res/levels/lvl" + level +".txt");
             Scanner fileReader = new Scanner(map);
 
             for (int i = 0; fileReader.hasNextLine(); i++) {
@@ -208,7 +245,14 @@ public class BombermanGame extends Application {
             entities.get(i).update();
             if (entities.get(i).isRemoved()) {
                 if (entities.get(i) instanceof Enemy) {
+                    if(entities.get(i) instanceof Balloon) {
+                        Sound.playSound("balloonDeath");
+                    } else if (entities.get(i) instanceof Oneal ) {
+                        Sound.playSound("skullHeadDeath");
+                    }
                     enemyCount--;
+                    points += 10;
+                    System.out.println(points);
                 }
                 entities.remove(i);
             }
@@ -275,11 +319,8 @@ public class BombermanGame extends Application {
     }
 
     private boolean levelFinished() {
-        if (Bomber.hitPortal && enemyCount == 0) {
-            return true;
-        }
+        return Bomber.hitPortal && enemyCount == 0;
 
-        return false;
     }
 
     private VBox menu(Stage stage, Scene gameScene) {

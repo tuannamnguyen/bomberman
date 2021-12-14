@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.movingObj;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.Sound;
 import uet.oop.bomberman.entities.movingObj.enemy.Enemy;
 import uet.oop.bomberman.entities.stillObj.Bomb;
 import uet.oop.bomberman.entities.stillObj.BombItem;
@@ -23,26 +24,31 @@ public class Bomber extends movingObjects {
 
     @Override
     public void update() {
+        System.out.println(hitPortal);
         if (this.direction.equalsIgnoreCase("RIGHT")) {
             if (this.canMove(x + speed * speedRate, y)) {
+                Sound.playSound("bombermove");
                 this.x += speed * speedRate;
                 this.img = Sprite.player_right.getFxImage();
             }
 
         } else if (this.direction.equalsIgnoreCase("LEFT")) {
             if (this.canMove(x - speed * speedRate, y)) {
+                Sound.playSound("bombermove");
                 this.x -= speed * speedRate;
                 this.img = Sprite.player_left.getFxImage();
             }
 
         } else if (this.direction.equalsIgnoreCase("UP")) {
             if (this.canMove(x, y - speed * speedRate)) {
+                Sound.playSound("bombermove");
                 this.y -= speed * speedRate;
                 this.img = Sprite.player_up.getFxImage();
             }
 
         } else if (this.direction.equalsIgnoreCase("DOWN")) {
             if (this.canMove(x, y + speed * speedRate)) {
+                Sound.playSound("bombermove");
                 this.y += speed * speedRate;
                 this.img = Sprite.player_down.getFxImage();
             }
@@ -61,9 +67,9 @@ public class Bomber extends movingObjects {
             return false;
         }
 
+        hitPortal = false;
         if (BombermanGame.getAt(x, y) instanceof Enemy) {
             this.setRemoved(true);
-            BombermanGame.gameOver = true;
             return true;
         }
 

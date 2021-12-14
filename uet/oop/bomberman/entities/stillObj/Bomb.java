@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.stillObj;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
+import uet.oop.bomberman.Sound;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.movingObj.movingObjects;
 import uet.oop.bomberman.graphics.Sprite;
@@ -37,8 +38,15 @@ public class Bomb extends Entity {
                 }
 
                 if (!(right instanceof Wall) && !(prevRight instanceof Wall)) {
-                    Entity explosionRight = new Explosion((x + 32 * i) / 32, y / 32,
-                            Sprite.explosion_horizontal_right_last2.getFxImage());
+                    Entity explosionRight;
+                    if (i == range) {
+                       explosionRight = new Explosion((x + 32 * i) / 32, y / 32,
+                            Sprite.explosion_horizontal_right_last2.getFxImage()); 
+                   } else {
+                        explosionRight = new Explosion((x + 32 * i) / 32, y / 32,
+                               Sprite.explosion_horizontal2.getFxImage());
+                    }
+                    
                     BombermanGame.getStillObjects().add(explosionRight);
 
                     if (right instanceof Brick || right instanceof movingObjects) {
@@ -47,8 +55,15 @@ public class Bomb extends Entity {
                 }
 
                 if (!(left instanceof Wall) && !(prevLeft instanceof Wall)) {
-                    Entity explosionLeft = new Explosion((x - 32 * i) / 32, y / 32,
+                    Entity explosionLeft;
+                    if (i == range) {
+                        explosionLeft = new Explosion((x - 32 * i) / 32, y / 32,
                             Sprite.explosion_horizontal_left_last2.getFxImage());
+                    } else {
+                        explosionLeft = new Explosion((x - 32 * i) / 32, y / 32,
+                                Sprite.explosion_horizontal2.getFxImage());
+                    }
+                    
                     BombermanGame.getStillObjects().add(explosionLeft);
 
                     if (left instanceof Brick || left instanceof movingObjects) {
@@ -57,8 +72,15 @@ public class Bomb extends Entity {
                 }
 
                 if (!(down instanceof Wall) && !(prevDown instanceof Wall)) {
-                    Entity explosionDown = new Explosion(x / 32, (y + 32 * i) / 32,
+                    Entity explosionDown;
+                    if (i == range) {
+                        explosionDown = new Explosion(x / 32, (y + 32 * i) / 32,
                             Sprite.explosion_vertical_down_last2.getFxImage());
+                    } else {
+                        explosionDown = new Explosion(x / 32, (y + 32 * i) / 32,
+                                Sprite.explosion_vertical2.getFxImage());
+                    }
+                    
                     BombermanGame.getStillObjects().add(explosionDown);
 
                     if (down instanceof Brick || down instanceof movingObjects) {
@@ -67,15 +89,22 @@ public class Bomb extends Entity {
                 }
 
                 if (!(up instanceof Wall) && !(prevUp instanceof Wall)) {
-                    Entity explosionUp = new Explosion(x / 32, (y - 32 * i) / 32,
-                            Sprite.explosion_vertical_top_last2.getFxImage());
+                    Entity explosionUp;
+                    if (i == range) {
+                        explosionUp = new Explosion(x / 32, (y - 32 * i) / 32,
+                                Sprite.explosion_vertical_top_last2.getFxImage());
+                    } else {
+                        explosionUp = new Explosion(x / 32, (y - 32 * i) / 32,
+                                Sprite.explosion_vertical2.getFxImage());
+                    }
+                    
                     BombermanGame.getStillObjects().add(explosionUp);
 
                     if (up instanceof Brick || up instanceof movingObjects) {
                         up.setRemoved(true);
                     }
                 }
-
+                Sound.playSound("explosionBomb");
                 this.setRemoved(true);
 
             } else {
