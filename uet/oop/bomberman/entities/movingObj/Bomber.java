@@ -23,6 +23,7 @@ public class Bomber extends movingObjects {
 
     @Override
     public void update() {
+        System.out.println(hitPortal);
         if (this.direction.equalsIgnoreCase("RIGHT")) {
             if (this.canMove(x + speed * speedRate, y)) {
                 this.x += speed * speedRate;
@@ -61,6 +62,7 @@ public class Bomber extends movingObjects {
             return false;
         }
 
+        hitPortal = false;
         if (BombermanGame.getAt(x, y) instanceof Enemy) {
             this.setRemoved(true);
             BombermanGame.gameOver = true;
