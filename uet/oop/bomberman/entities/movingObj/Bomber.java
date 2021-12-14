@@ -70,7 +70,6 @@ public class Bomber extends movingObjects {
         hitPortal = false;
         if (BombermanGame.getAt(x, y) instanceof Enemy) {
             this.setRemoved(true);
-            BombermanGame.gameOver = true;
             return true;
         }
 

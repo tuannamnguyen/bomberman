@@ -137,7 +137,6 @@ public class Oneal extends Enemy {
         Entity e = BombermanGame.getAt(x, y);
 
         if (e instanceof Bomber) {
-            BombermanGame.gameOver = true;
             e.setRemoved(true);
             return true;
         }
