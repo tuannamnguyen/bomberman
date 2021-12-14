@@ -10,7 +10,7 @@ public class Sound {
 
 
         try {
-            String path = (System.getProperty("user.dir")+"\\uet\\oop\\bomberman\\res\\sound\\" + fileName + ".wav");
+            String path = ("src/uet/oop/bomberman/res/sound/" + fileName + ".wav");
             File file = new File(path);
             Clip clip = AudioSystem.getClip();
             AudioInputStream inputStream = AudioSystem.getAudioInputStream(file);
@@ -23,7 +23,7 @@ public class Sound {
     }
 //    uet/oop/bomberman/res/sound/dropPodLeaving.wav
     public static void loopSound(String fileName) {
-        String path = (System.getProperty("user.dir")+"\\uet\\oop\\bomberman\\res\\sound\\" + fileName + ".wav");
+        String path = ("src/uet/oop/bomberman/res/sound/" + fileName + ".wav");
 
         try {
             File file = new File(path);
