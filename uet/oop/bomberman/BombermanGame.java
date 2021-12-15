@@ -108,22 +108,33 @@ public class BombermanGame extends Application {
             }
         });
 
+        createMap(currentLevel);
+
         HBox scoreBar = new HBox();
         Label score = new Label();
+        Label level = new Label();
 
+        level.setStyle("-fx-font: 24 arial;");
         score.setStyle("-fx-font: 24 arial;");
+
         scoreBar.setStyle("-fx-background-color: #336699;");
         scoreBar.setPadding(new Insets(15, 12, 15, 12));
         scoreBar.setSpacing(10);
-        scoreBar.getChildren().addAll(score);
+        scoreBar.getChildren().addAll(score, level);
 
         // Tao root container
         BorderPane root = new BorderPane();
-        score.textProperty().bind(Bindings.createStringBinding(() -> ("Score: " + points)));
         root.setCenter(canvas);
         root.setTop(scoreBar);
 
-        createMap(currentLevel);
+        // Tao scene
+        Scene gameScene = new Scene(root);
+        Scene menuScene = new Scene(menu(stage, gameScene));
+
+        // Them scene vao stage
+        stage.setScene(menuScene);
+        stage.setTitle("Bomberman Game");
+        stage.show();
 
         // Game loop
         AnimationTimer timer = new AnimationTimer() {
@@ -141,9 +152,13 @@ public class BombermanGame extends Application {
 
                 render();
                 update();
+                
+                level.textProperty().bind(Bindings.createStringBinding(() -> ("Level: " + currentLevel)));
+                score.textProperty().bind(Bindings.createStringBinding(() -> ("Score: " + points)));
 
                 if (levelFinished()) {
                     entities.clear();
+
                     stillObjects.clear();
                     enemyCount = 0;
                     Bomb.range = 1;
@@ -158,14 +173,6 @@ public class BombermanGame extends Application {
         };
         timer.start();
 
-        // Tao scene
-        Scene gameScene = new Scene(root);
-        Scene menuScene = new Scene(menu(stage, gameScene));
-
-        // Them scene vao stage
-        stage.setScene(menuScene);
-        stage.setTitle("Bomberman Game");
-        stage.show();
     }
 
     public void createMap(int level) {
