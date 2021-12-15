@@ -24,7 +24,6 @@ public class Bomber extends movingObjects {
 
     @Override
     public void update() {
-        System.out.println(hitPortal);
         if (this.direction.equalsIgnoreCase("RIGHT")) {
             if (this.canMove(x + speed * speedRate, y)) {
                 Sound.playSound("bombermove");
@@ -98,5 +97,5 @@ public class Bomber extends movingObjects {
 
         return true;
     }
-
+    
 }
