@@ -7,7 +7,6 @@ public abstract class movingObjects extends Entity {
     protected int speed = 32;
     protected String direction = "";
 
-
     public movingObjects(int x, int y, Image img) {
         super(x, y, img);
     }
@@ -28,7 +27,12 @@ public abstract class movingObjects extends Entity {
         this.direction = direction;
     }
 
+    /**
+     * check if object can move to (x, y).
+     * 
+     * @param x x coordinate.
+     * @param y y coordinate.
+     * @return can move?
+     */
     public abstract boolean canMove(int x, int y);
 }
-
-

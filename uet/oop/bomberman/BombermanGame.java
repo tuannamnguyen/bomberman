@@ -136,7 +136,7 @@ public class BombermanGame extends Application {
         stage.setTitle("Bomberman Game");
         stage.show();
 
-        // Game loop
+        // Game loop, called 60 times a second.
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -152,14 +152,14 @@ public class BombermanGame extends Application {
 
                 render();
                 update();
-                
+
                 level.textProperty().bind(Bindings.createStringBinding(() -> ("Level: " + currentLevel)));
                 score.textProperty().bind(Bindings.createStringBinding(() -> ("Score: " + points)));
 
                 if (levelFinished()) {
                     entities.clear();
-
                     stillObjects.clear();
+
                     enemyCount = 0;
                     Bomb.range = 1;
                     Bomber.bombCount = 1;
@@ -167,7 +167,6 @@ public class BombermanGame extends Application {
                     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
                     currentLevel++;
                     createMap(currentLevel);
-
                 }
             }
         };
@@ -254,7 +253,6 @@ public class BombermanGame extends Application {
                     }
                     enemyCount--;
                     points += 10;
-                    System.out.println(points);
                 }
                 entities.remove(i);
             }
@@ -284,6 +282,11 @@ public class BombermanGame extends Application {
         return stillObjects;
     }
 
+    /**
+     * @param x x coordinate.
+     * @param y y coordinate.
+     * @return entity at (x, y) in canvas.
+     */
     public static Entity getAt(int x, int y) {
         for (Entity e : entities) {
             if (e.getX() == x && e.getY() == y) {
@@ -305,6 +308,11 @@ public class BombermanGame extends Application {
         return null;
     }
 
+    /**
+     * check if bomb has been placed.
+     * 
+     * @return bomb has been placed?
+     */
     private boolean bombExisted() {
         int count = 0;
         for (Entity e : stillObjects) {
@@ -320,11 +328,22 @@ public class BombermanGame extends Application {
         return false;
     }
 
+    /**
+     * check if level is finished.
+     * 
+     * @return level finished?
+     */
     private boolean levelFinished() {
         return Bomber.hitPortal && enemyCount == 0;
-
     }
 
+    /**
+     * opening scene.
+     * 
+     * @param stage     main stage.
+     * @param gameScene playing scene.
+     * @return vbox contain welcoming page.
+     */
     private VBox menu(Stage stage, Scene gameScene) {
         VBox vbox = new VBox();
         try {
