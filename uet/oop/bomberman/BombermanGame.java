@@ -48,6 +48,7 @@ public class BombermanGame extends Application {
     public static int enemyCount = 0;
     public static int points = 0;
     private int currentLevel = 1;
+    private int totalLevel = 2;
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -176,64 +177,67 @@ public class BombermanGame extends Application {
 
     public void createMap(int level) {
         try {
-            FileReader map = new FileReader("src/uet/oop/bomberman/res/levels/lvl" + level + ".txt");
-            Scanner fileReader = new Scanner(map);
+            if (level <= totalLevel) {
+                FileReader map = new FileReader("src/uet/oop/bomberman/res/levels/lvl" + level + ".txt");
+                Scanner fileReader = new Scanner(map);
 
-            for (int i = 0; fileReader.hasNextLine(); i++) {
-                String content = fileReader.nextLine();
-                for (int j = 0; j < content.length(); j++) {
+                for (int i = 0; fileReader.hasNextLine(); i++) {
+                    String content = fileReader.nextLine();
+                    for (int j = 0; j < content.length(); j++) {
 
-                    if (content.charAt(j) == '#') {
-                        Entity wall = new Wall(j, i, Sprite.wall.getFxImage());
-                        stillObjects.add(wall);
-                    } else {
-                        Entity grass = new Grass(j, i, Sprite.grass.getFxImage());
-                        stillObjects.add(grass);
+                        if (content.charAt(j) == '#') {
+                            Entity wall = new Wall(j, i, Sprite.wall.getFxImage());
+                            stillObjects.add(wall);
+                        } else {
+                            Entity grass = new Grass(j, i, Sprite.grass.getFxImage());
+                            stillObjects.add(grass);
 
-                        if (content.charAt(j) == 'p') {
-                            bomber = new Bomber(j, i, Sprite.player_right.getFxImage());
-                            entities.add(bomber);
-                        } else if (content.charAt(j) == '1') {
-                            Entity balloon = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
-                            entities.add(balloon);
-                            enemyCount++;
-                        } else if (content.charAt(j) == '2') {
-                            Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage(), bomber);
-                            entities.add(oneal);
-                            enemyCount++;
-                        } else if (content.charAt(j) == 'b') {
-                            Entity bombItem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
-                            stillObjects.add(bombItem);
+                            if (content.charAt(j) == 'p') {
+                                bomber = new Bomber(j, i, Sprite.player_right.getFxImage());
+                                entities.add(bomber);
+                            } else if (content.charAt(j) == '1') {
+                                Entity balloon = new Balloon(j, i, Sprite.balloom_left1.getFxImage());
+                                entities.add(balloon);
+                                enemyCount++;
+                            } else if (content.charAt(j) == '2') {
+                                Entity oneal = new Oneal(j, i, Sprite.oneal_left1.getFxImage(), bomber);
+                                entities.add(oneal);
+                                enemyCount++;
+                            } else if (content.charAt(j) == 'b') {
+                                Entity bombItem = new BombItem(j, i, Sprite.powerup_bombs.getFxImage());
+                                stillObjects.add(bombItem);
 
-                            Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
-                            stillObjects.add(brick);
-                        } else if (content.charAt(j) == 'f') {
-                            Entity flameItem = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
-                            stillObjects.add(flameItem);
+                                Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
+                                stillObjects.add(brick);
+                            } else if (content.charAt(j) == 'f') {
+                                Entity flameItem = new FlameItem(j, i, Sprite.powerup_flames.getFxImage());
+                                stillObjects.add(flameItem);
 
-                            Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
-                            stillObjects.add(brick);
-                        } else if (content.charAt(j) == 's') {
-                            Entity speedItem = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
-                            stillObjects.add(speedItem);
+                                Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
+                                stillObjects.add(brick);
+                            } else if (content.charAt(j) == 's') {
+                                Entity speedItem = new SpeedItem(j, i, Sprite.powerup_speed.getFxImage());
+                                stillObjects.add(speedItem);
 
-                            Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
-                            stillObjects.add(brick);
-                        } else if (content.charAt(j) == 'x') {
-                            Entity portal = new Portal(j, i, Sprite.portal.getFxImage());
-                            stillObjects.add(portal);
+                                Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
+                                stillObjects.add(brick);
+                            } else if (content.charAt(j) == 'x') {
+                                Entity portal = new Portal(j, i, Sprite.portal.getFxImage());
+                                stillObjects.add(portal);
 
-                            Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
-                            stillObjects.add(brick);
-                        } else if (content.charAt(j) == '*') {
-                            Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
-                            stillObjects.add(brick);
+                                Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
+                                stillObjects.add(brick);
+                            } else if (content.charAt(j) == '*') {
+                                Entity brick = new Brick(j, i, Sprite.brick.getFxImage());
+                                stillObjects.add(brick);
+                            }
                         }
                     }
                 }
+
+                fileReader.close();
             }
 
-            fileReader.close();
         } catch (FileNotFoundException e) {
             System.out.println("Error FileNotFound");
             e.printStackTrace();
